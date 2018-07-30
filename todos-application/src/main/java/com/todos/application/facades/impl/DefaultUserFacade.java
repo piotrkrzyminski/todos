@@ -2,59 +2,62 @@ package com.todos.application.facades.impl;
 
 import com.todos.api.services.UserService;
 import com.todos.application.facades.UserFacade;
-import com.todos.core.converters.Converter;
 import com.todos.application.facades.impl.exceptions.DuplicateEmailException;
+import com.todos.core.converters.Converter;
 import com.todos.application.facades.impl.exceptions.DuplicateLoginException;
 import com.todos.application.facades.impl.exceptions.DuplicateUserException;
 import com.todos.data.RegisterData;
-import com.todos.data.UserData;
 import com.todos.model.User;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
 import org.springframework.util.Assert;
 
+/**
+ * This facade is responsible for all operations on users.
+ */
 @Component("userFacade")
 public class DefaultUserFacade implements UserFacade {
 
-    private BCryptPasswordEncoder encoder ;
-    private UserService userService;
-    private Converter<User, UserData> userConverter;
+    private static final Logger LOG = LoggerFactory.getLogger(DefaultUserFacade.class);
 
-    public DefaultUserFacade() {
-        encoder = new BCryptPasswordEncoder();
+    private UserService userService;
+    private Converter<User, RegisterData> registerConverter;
+
+    @Override
+    public void register(RegisterData data) throws Exception {
+        LOG.info("Performing registration. Login [" + data.getLogin() + "], email [" + data.getEmail() + "]");
+
+        //Check if user with login already exists and register him
+        if(!isUserExists(data)) {
+            User user = registerConverter.convert(data);
+
+            userService.save(user);
+            LOG.info("Registration finished successfully");
+        }
     }
 
     @Override
-    public void register(RegisterData data) throws DuplicateUserException {
-        // validate data before operation
-        Assert.hasText(data.getLogin(), "Field [login] cannot be empty");
-        Assert.hasText(data.getPassword(), "Field [password] cannot be empty");
-        Assert.hasText(data.getEmail(), "Field [email] cannot be empty");
+    public boolean isUserExists(RegisterData data) throws DuplicateUserException {
 
-        //Check if user with login already exists
+        validateRegisterData(data); // validate registration data
+
         if(userService.getUserByLogin(data.getLogin()) != null)
             throw new DuplicateLoginException("User with login " + data.getLogin() + " already exists");
 
         if(userService.getUserByEmail(data.getEmail()) != null)
             throw new DuplicateEmailException("User with email " + data.getEmail() + " already exists");
 
-        // Create user with encoded password
-        userService.save(convertToUser(data));
+        return false;
     }
 
-    private User convertToUser(RegisterData data) {
-        User user = new User();
-
-        user.setLogin(data.getLogin());
-        user.setEmail(data.getEmail());
-        user.setPassword(encodePassword(data.getPassword()));
-
-        return user;
-    }
-
-    private String encodePassword(String password) {
-        return encoder.encode(password);
+    private void validateRegisterData(RegisterData data) {
+        Assert.hasText(data.getLogin(), "Field [login] cannot be empty");
+        Assert.hasText(data.getPassword(), "Field [password] cannot be empty");
+        Assert.hasText(data.getEmail(), "Field [email] cannot be empty");
+        Assert.hasText(data.getFirstName(),"Field [first name] cannot be empty");
+        Assert.hasText(data.getSurname(),"Field [surname] cannot be empty");
     }
 
     @Autowired
@@ -63,7 +66,7 @@ public class DefaultUserFacade implements UserFacade {
     }
 
     @Autowired
-    public void setUserConverter(Converter<User, UserData> userConverter) {
-        this.userConverter = userConverter;
+    public void setRegisterConverter(Converter<User, RegisterData> registerConverter) {
+        this.registerConverter = registerConverter;
     }
 }

@@ -4,6 +4,8 @@ import com.todos.api.services.UserService;
 import com.todos.application.facades.impl.exceptions.DuplicateEmailException;
 import com.todos.application.facades.impl.exceptions.DuplicateLoginException;
 import com.todos.application.facades.impl.exceptions.DuplicateUserException;
+import com.todos.core.converters.Converter;
+import com.todos.core.converters.impl.DefaultRegisterConverter;
 import com.todos.core.services.DefaultUserService;
 import com.todos.data.RegisterData;
 import com.todos.model.User;
@@ -26,26 +28,39 @@ import static org.mockito.Mockito.*;
 @ComponentScan(basePackages = {"com.todos"})
 public class DefaultUserFacadeTest {
 
+    private final static String LOGIN = "dummy";
+    private final static String PASSWORD = "passw";
+    private final static String EMAIL = "dummy@email.com";
+    private final static String FIRST_NAME = "John";
+    private final static String SURNAME = "Smith";
+
     private DefaultUserFacade userFacade;
 
     @Mock
     private UserService userService;
 
     @Mock
-    private RegisterData registerData;
+    private Converter<User, RegisterData> registerConverter;
 
     @Mock
-    private User user;
+    private RegisterData registerData;
 
     @Before
     public void setup() {
         userFacade = new DefaultUserFacade();
-        registerData = mock(RegisterData.class);
-        user = mock(User.class);
 
         userService = mock(DefaultUserService.class);
+        registerConverter = mock(DefaultRegisterConverter.class);
 
         userFacade.setUserService(userService);
+        userFacade.setRegisterConverter(registerConverter);
+
+        registerData = mock(RegisterData.class);
+        when(registerData.getLogin()).thenReturn(LOGIN);
+        when(registerData.getEmail()).thenReturn(EMAIL);
+        when(registerData.getPassword()).thenReturn(PASSWORD);
+        when(registerData.getFirstName()).thenReturn(FIRST_NAME);
+        when(registerData.getSurname()).thenReturn(SURNAME);
     }
 
     /**
@@ -53,23 +68,14 @@ public class DefaultUserFacadeTest {
      * This operation should be finished successfully.
      */
     @Test
-    public void testRegistrationSuccess() throws DuplicateUserException {
-        when(registerData.getLogin()).thenReturn("dummy");
-        when(registerData.getEmail()).thenReturn("dummy@email.com");
-        when(registerData.getPassword()).thenReturn("qwerty");
-
+    public void testRegistrationSuccess() throws Exception {
         // user not exists in database
         when(userService.getUserByLogin("dummy")).thenReturn(null);
         when(userService.getUserByEmail("dummy@email.com")).thenReturn(null);
 
         userFacade.register(registerData);
 
-        //convert register data to user
-        when(user.getLogin()).thenReturn("dummy");
-        when(user.getEmail()).thenReturn("dummy@email.com");
-        when(user.getPassword()).thenReturn("qwerty");
-
-        verify(userService).save(any()); // save method was called
+        verify(userService, times(1)).save(any()); // save method was called
     }
 
     /**
@@ -77,12 +83,12 @@ public class DefaultUserFacadeTest {
      * This operation should failed because user login is required during registration.
      */
     @Test(expected = IllegalArgumentException.class)
-    public void testRegistrationLoginIsNull() throws DuplicateUserException {
+    public void testRegistrationLoginIsNull() throws Exception {
         when(registerData.getLogin()).thenReturn(null);
-        when(registerData.getEmail()).thenReturn("dummy@email.com");
-        when(registerData.getPassword()).thenReturn("qwerty");
 
         userFacade.register(registerData);
+
+        verify(userService, never()).save(any()); // registration is not performed.
     }
 
     /**
@@ -90,12 +96,12 @@ public class DefaultUserFacadeTest {
      * This operation should failed because user login is required during registration.
      */
     @Test(expected = IllegalArgumentException.class)
-    public void testRegistrationEmptyLogin() throws DuplicateUserException {
+    public void testRegistrationEmptyLogin() throws Exception {
         when(registerData.getLogin()).thenReturn("");
-        when(registerData.getEmail()).thenReturn("dummy@email.com");
-        when(registerData.getPassword()).thenReturn("qwerty");
 
         userFacade.register(registerData);
+
+        verify(userService, never()).save(any()); // registration is not performed.
     }
 
     /**
@@ -103,12 +109,12 @@ public class DefaultUserFacadeTest {
      * This operation should failed because email is required during registration.
      */
     @Test(expected = IllegalArgumentException.class)
-    public void testRegistrationEmailIsNull() throws DuplicateUserException {
-        when(registerData.getLogin()).thenReturn("dummy");
+    public void testRegistrationEmailIsNull() throws Exception {
         when(registerData.getEmail()).thenReturn(null);
-        when(registerData.getPassword()).thenReturn("qwerty");
 
         userFacade.register(registerData);
+
+        verify(userService, never()).save(any()); // registration is not performed.
     }
 
     /**
@@ -116,12 +122,12 @@ public class DefaultUserFacadeTest {
      * This operation should failed because email is required during registration.
      */
     @Test(expected = IllegalArgumentException.class)
-    public void testRegistrationEmptyEmail() throws DuplicateUserException {
-        when(registerData.getLogin()).thenReturn("dummy");
+    public void testRegistrationEmptyEmail() throws Exception {
         when(registerData.getEmail()).thenReturn("");
-        when(registerData.getPassword()).thenReturn("qwerty");
 
         userFacade.register(registerData);
+
+        verify(userService, never()).save(any()); // registration is not performed.
     }
 
     /**
@@ -129,12 +135,12 @@ public class DefaultUserFacadeTest {
      * This operation should failed because password is required during registration.
      */
     @Test(expected = IllegalArgumentException.class)
-    public void testRegistrationPasswordIsNull() throws DuplicateUserException {
-        when(registerData.getLogin()).thenReturn("dummy");
-        when(registerData.getEmail()).thenReturn("dummy@email.com");
+    public void testRegistrationPasswordIsNull() throws Exception {
         when(registerData.getPassword()).thenReturn(null);
 
         userFacade.register(registerData);
+
+        verify(userService, never()).save(any()); // registration is not performed.
     }
 
     /**
@@ -142,12 +148,12 @@ public class DefaultUserFacadeTest {
      * This operation should failed because password is required during registration.
      */
     @Test(expected = IllegalArgumentException.class)
-    public void testRegistrationEmptyPassword() throws DuplicateUserException {
-        when(registerData.getLogin()).thenReturn("dummy");
-        when(registerData.getEmail()).thenReturn("dummy@email.com");
+    public void testRegistrationEmptyPassword() throws Exception {
         when(registerData.getPassword()).thenReturn("");
 
         userFacade.register(registerData);
+
+        verify(userService, never()).save(any()); // registration is not performed.
     }
 
     /**
@@ -155,16 +161,14 @@ public class DefaultUserFacadeTest {
      * This operation should failed because login must be unique.
      */
     @Test(expected = DuplicateLoginException.class)
-    public void testRegistrationDuplicateLoginFailed() throws DuplicateUserException {
-        when(registerData.getLogin()).thenReturn("dummy");
-        when(registerData.getEmail()).thenReturn("dummy@email.com");
-        when(registerData.getPassword()).thenReturn("qwerty");
-
+    public void testRegistrationDuplicateLoginFailed() throws Exception {
         // user with login 'dummy' already exists in database
         when(userService.getUserByLogin("dummy")).thenReturn(new User());
         when(userService.getUserByEmail("dummy@email.com")).thenReturn(null);
 
         userFacade.register(registerData);
+
+        verify(userService, never()).save(any()); // registration is not performed.
     }
 
     /**
@@ -172,16 +176,14 @@ public class DefaultUserFacadeTest {
      * This operation should failed because email must be unique.
      */
     @Test(expected = DuplicateEmailException.class)
-    public void testRegistrationDuplicateEmailFailed() throws DuplicateUserException {
-        when(registerData.getLogin()).thenReturn("dummy");
-        when(registerData.getEmail()).thenReturn("dummy@email.com");
-        when(registerData.getPassword()).thenReturn("qwerty");
-
+    public void testRegistrationDuplicateEmailFailed() throws Exception {
         // user with email 'dummy@email.com' already exists in database
         when(userService.getUserByLogin("dummy")).thenReturn(null);
         when(userService.getUserByEmail("dummy@email.com")).thenReturn(new User());
 
         userFacade.register(registerData);
+
+        verify(userService, never()).save(any()); // registration is not performed.
     }
 
     @SpringBootApplication

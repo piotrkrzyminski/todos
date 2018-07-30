@@ -11,8 +11,17 @@ public interface UserFacade {
     /**
      * Get data from registration page and validate it.
      * Perform register if user with specified data not exists in datasource.
+     * Before register encrypt password for safety.
      *
-     * @param data registration form data.
+     * @param data registration data.
      */
-    void register(RegisterData data) throws DuplicateUserException;
+    void register(RegisterData data) throws Exception;
+
+    /**
+     * Checks in database if data passed form registration form is already exists.
+     * User login and email must be unique.
+     *
+     * @param data registration data.
+     */
+    boolean isUserExists(RegisterData data) throws DuplicateUserException;
 }

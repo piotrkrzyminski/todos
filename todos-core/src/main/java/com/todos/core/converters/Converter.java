@@ -11,5 +11,19 @@ import com.todos.model.AbstractModel;
  */
 public interface Converter<E extends AbstractModel,T extends AbstractData> {
 
+    /**
+     * Convert model object to data.
+     *
+     * @param model model to convert.
+     * @return converted data object.
+     */
     T convert(E model);
+
+    /**
+     * Convert data object to model.
+     *
+     * @param data data to convert.
+     * @return converted model object.
+     */
+    E convert(T data);
 }
