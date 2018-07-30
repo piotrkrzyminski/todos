@@ -20,13 +20,4 @@ public interface UserRepository extends CrudRepository<User, Long> {
      * @return user with specified email.
      */
     User findUserByEmail(String email);
-
-    /**
-     * Search for duplicated data in database.
-     *
-     * @param login login of user.
-     * @param email email of user.
-     * @return user with specified login and email.
-     */
-    User findUserByLoginAndEmail(String login, String email);
 }

@@ -3,9 +3,9 @@ package com.todos.application.facades.impl;
 import com.todos.api.services.UserService;
 import com.todos.application.facades.UserFacade;
 import com.todos.core.converters.Converter;
-import com.todos.core.services.exceptions.DuplicateEmailException;
-import com.todos.core.services.exceptions.DuplicateLoginException;
-import com.todos.core.services.exceptions.DuplicateUserException;
+import com.todos.application.facades.impl.exceptions.DuplicateEmailException;
+import com.todos.application.facades.impl.exceptions.DuplicateLoginException;
+import com.todos.application.facades.impl.exceptions.DuplicateUserException;
 import com.todos.data.RegisterData;
 import com.todos.data.UserData;
 import com.todos.model.User;
@@ -17,15 +17,12 @@ import org.springframework.util.Assert;
 @Component("userFacade")
 public class DefaultUserFacade implements UserFacade {
 
-    private BCryptPasswordEncoder encoder;
-    private final UserService userService;
-    private final Converter<User, UserData> userConverter;
+    private BCryptPasswordEncoder encoder ;
+    private UserService userService;
+    private Converter<User, UserData> userConverter;
 
-    @Autowired
-    public DefaultUserFacade(UserService userService, Converter<User, UserData> userConverter) {
+    public DefaultUserFacade() {
         encoder = new BCryptPasswordEncoder();
-        this.userService = userService;
-        this.userConverter = userConverter;
     }
 
     @Override
@@ -58,5 +55,15 @@ public class DefaultUserFacade implements UserFacade {
 
     private String encodePassword(String password) {
         return encoder.encode(password);
+    }
+
+    @Autowired
+    public void setUserService(UserService userService) {
+        this.userService = userService;
+    }
+
+    @Autowired
+    public void setUserConverter(Converter<User, UserData> userConverter) {
+        this.userConverter = userConverter;
     }
 }

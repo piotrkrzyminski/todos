@@ -1,6 +1,6 @@
 package com.todos.application.facades;
 
-import com.todos.core.services.exceptions.DuplicateUserException;
+import com.todos.application.facades.impl.exceptions.DuplicateUserException;
 import com.todos.data.RegisterData;
 
 /**

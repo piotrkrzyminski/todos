@@ -34,16 +34,7 @@ public class DefaultUserService implements UserService {
         return userRepository.findUserByEmail(email);
     }
 
-    @Override
-    public User getUserByLoginAndEmail(String login, String email) {
-        LOG.debug("Searching for user with login " + login + " and email " + email);
-        return userRepository.findUserByLoginAndEmail(login, email);
-    }
-
-    public UserRepository getUserRepository() {
-        return userRepository;
-    }
-
+    @Autowired
     public void setUserRepository(UserRepository userRepository) {
         this.userRepository = userRepository;
     }

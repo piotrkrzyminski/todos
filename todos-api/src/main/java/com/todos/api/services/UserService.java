@@ -27,13 +27,4 @@ public interface UserService {
      * @return user with selected email or null.
      */
     User getUserByEmail(String email);
-
-    /**
-     * Search for user in database using unique login and email.
-     *
-     * @param login user's login.
-     * @param email user's email.
-     * @return user with selected login and email.
-     */
-    User getUserByLoginAndEmail(String login, String email);
 }
