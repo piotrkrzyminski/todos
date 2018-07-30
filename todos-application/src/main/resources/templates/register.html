@@ -13,6 +13,5 @@
         <p><input type="submit" value="Zarejestruj się"> <input type="reset" value="Wyczyść"></p>
     </form>
     <span th:if="${error != null}" th:text="#{register.error}"></span>
-    <span th:if="${duplicated != null}" th:text="#{data.duplicate}"></span>
 </body>
 </html>
