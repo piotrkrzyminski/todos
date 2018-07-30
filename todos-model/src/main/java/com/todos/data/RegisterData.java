@@ -20,6 +20,18 @@ public class RegisterData extends AbstractData {
     @NotEmpty
     private String password;
 
+    @NotNull
+    @NotEmpty
+    private String firstName;
+
+    private String secondName;
+
+    @NotNull
+    @NotEmpty
+    private String surname;
+
+    private String contactNumber;
+
     public String getLogin() {
         return login;
     }
@@ -42,5 +54,37 @@ public class RegisterData extends AbstractData {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public String getSecondName() {
+        return secondName;
+    }
+
+    public void setSecondName(String secondName) {
+        this.secondName = secondName;
+    }
+
+    public String getSurname() {
+        return surname;
+    }
+
+    public void setSurname(String surname) {
+        this.surname = surname;
+    }
+
+    public String getContactNumber() {
+        return contactNumber;
+    }
+
+    public void setContactNumber(String contactNumber) {
+        this.contactNumber = contactNumber;
     }
 }

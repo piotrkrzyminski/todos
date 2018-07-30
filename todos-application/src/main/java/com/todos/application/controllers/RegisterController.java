@@ -28,8 +28,6 @@ public class RegisterController {
     public String showRegistrationPage(Model model) {
         model.addAttribute("registerData", new RegisterData());
 
-        LOG.debug("Returning registration page");
-
         return "register";
     }
 
@@ -37,22 +35,17 @@ public class RegisterController {
     public String handleRegister(@ModelAttribute("registerData") @Validated RegisterData registerData,
                                  BindingResult result, Model model) {
 
-        if (result.hasErrors()) {
-            LOG.debug("Register data has some errors. Registration cannot be performed");
-            model.addAttribute("error", true);
-        } else {
+        if (!result.hasErrors()) {
 
             try {
                 userFacade.register(registerData);
-                LOG.debug("User with login " + registerData.getLogin() + " registered successfully");
                 return "home";
             } catch (Exception e) {
-                LOG.debug("User cannot be registered");
-                model.addAttribute("error", true);
-                LOG.debug(e.getMessage());
+                LOG.warn(e.getMessage());
             }
         }
 
+        model.addAttribute("error", true);
         return "register";
     }
 

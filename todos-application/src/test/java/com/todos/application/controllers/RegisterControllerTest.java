@@ -29,6 +29,13 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @RunWith(SpringJUnit4ClassRunner.class)
 public class RegisterControllerTest {
 
+    private final static String LOGIN = "dummy";
+    private final static String PASSWORD = "passw";
+    private final static String EMAIL = "dummy@email.com";
+    private final static String FIRST_NAME = "John";
+    private final static String SECOND_NAME = "Adam";
+    private final static String SURNAME = "Smith";
+
     @Mock
     private DefaultUserFacade userFacade;
 
@@ -50,6 +57,13 @@ public class RegisterControllerTest {
 
         mockMvc = MockMvcBuilders.standaloneSetup(controller)
                 .setViewResolvers(viewResolver).build();
+
+        registerData.setLogin(LOGIN);
+        registerData.setEmail(EMAIL);
+        registerData.setPassword(PASSWORD);
+        registerData.setFirstName(FIRST_NAME);
+        registerData.setSecondName(SECOND_NAME);
+        registerData.setSurname(SURNAME);
     }
 
     /**
@@ -59,9 +73,7 @@ public class RegisterControllerTest {
     public void showRegisterPage() throws Exception {
         mockMvc.perform(get("/register"))
                 .andExpect(status().isOk())
-                .andExpect(model().attribute("registerData", hasProperty("login", isEmptyOrNullString())))
-                .andExpect(model().attribute("registerData", hasProperty("email", isEmptyOrNullString())))
-                .andExpect(model().attribute("registerData", hasProperty("password", isEmptyOrNullString())))
+                .andExpect(model().attributeExists("registerData"))
                 .andExpect(view().name("register"));
     }
 
@@ -71,8 +83,6 @@ public class RegisterControllerTest {
     @Test
     public void processRegisterFormWrongLoginPassed() throws Exception {
         registerData.setLogin("");
-        registerData.setEmail("email@test.com");
-        registerData.setPassword("passw");
 
         mockMvc.perform(post("/register")
                 .contentType(MediaType.APPLICATION_FORM_URLENCODED)
@@ -80,8 +90,11 @@ public class RegisterControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(view().name("register"))
                 .andExpect(model().attribute("registerData", hasProperty("login", is(""))))
-                .andExpect(model().attribute("registerData", hasProperty("email", is("email@test.com"))))
-                .andExpect(model().attribute("registerData", hasProperty("password", is("passw"))))
+                .andExpect(model().attribute("registerData", hasProperty("email", is(EMAIL))))
+                .andExpect(model().attribute("registerData", hasProperty("firstName", is(FIRST_NAME))))
+                .andExpect(model().attribute("registerData", hasProperty("surname", is(SURNAME))))
+                .andExpect(model().attribute("registerData", hasProperty("secondName", is(SECOND_NAME))))
+                .andExpect(model().attribute("registerData", hasProperty("password", is(PASSWORD))))
                 .andExpect(model().attributeHasErrors("registerData"));
 
         verify(userFacade, never()).register(registerData); // registration will be never performed.
@@ -92,18 +105,19 @@ public class RegisterControllerTest {
      */
     @Test
     public void processRegisterFormWrongEmailPassed() throws Exception {
-        registerData.setLogin("dummy");
         registerData.setEmail("");
-        registerData.setPassword("passw");
 
         mockMvc.perform(post("/register")
                 .contentType(MediaType.APPLICATION_FORM_URLENCODED)
                 .flashAttr("registerData", registerData))
                 .andExpect(status().isOk())
                 .andExpect(view().name("register"))
-                .andExpect(model().attribute("registerData", hasProperty("login", is("dummy"))))
+                .andExpect(model().attribute("registerData", hasProperty("login", is(LOGIN))))
                 .andExpect(model().attribute("registerData", hasProperty("email", is(""))))
-                .andExpect(model().attribute("registerData", hasProperty("password", is("passw"))))
+                .andExpect(model().attribute("registerData", hasProperty("firstName", is(FIRST_NAME))))
+                .andExpect(model().attribute("registerData", hasProperty("surname", is(SURNAME))))
+                .andExpect(model().attribute("registerData", hasProperty("secondName", is(SECOND_NAME))))
+                .andExpect(model().attribute("registerData", hasProperty("password", is(PASSWORD))))
                 .andExpect(model().attributeHasErrors("registerData"));
 
         verify(userFacade, never()).register(registerData); // registration will be never performed.
@@ -114,8 +128,6 @@ public class RegisterControllerTest {
      */
     @Test
     public void processRegisterFormWrongPasswordPassed() throws Exception {
-        registerData.setLogin("dummy");
-        registerData.setEmail("email@test.com");
         registerData.setPassword("");
 
         mockMvc.perform(post("/register")
@@ -123,9 +135,12 @@ public class RegisterControllerTest {
                 .flashAttr("registerData", registerData))
                 .andExpect(status().isOk())
                 .andExpect(view().name("register"))
-                .andExpect(model().attribute("registerData", hasProperty("login", is("dummy"))))
-                .andExpect(model().attribute("registerData", hasProperty("email", is("email@test.com"))))
+                .andExpect(model().attribute("registerData", hasProperty("login", is(LOGIN))))
+                .andExpect(model().attribute("registerData", hasProperty("email", is(EMAIL))))
                 .andExpect(model().attribute("registerData", hasProperty("password", is(""))))
+                .andExpect(model().attribute("registerData", hasProperty("surname", is(SURNAME))))
+                .andExpect(model().attribute("registerData", hasProperty("firstName", is(FIRST_NAME))))
+                .andExpect(model().attribute("registerData", hasProperty("secondName", is(SECOND_NAME))))
                 .andExpect(model().attributeHasErrors("registerData"));
 
         verify(userFacade, never()).register(registerData); // registration will be never performed.
@@ -136,18 +151,17 @@ public class RegisterControllerTest {
      */
     @Test
     public void processRegisterProperDataPassed() throws Exception {
-        registerData.setLogin("dummy");
-        registerData.setEmail("email@test.com");
-        registerData.setPassword("passw");
-
         mockMvc.perform(post("/register")
                 .contentType(MediaType.APPLICATION_FORM_URLENCODED)
                 .flashAttr("registerData", registerData))
                 .andExpect(status().isOk())
                 .andExpect(view().name("home"))
-                .andExpect(model().attribute("registerData", hasProperty("login", is("dummy"))))
-                .andExpect(model().attribute("registerData", hasProperty("email", is("email@test.com"))))
-                .andExpect(model().attribute("registerData", hasProperty("password", is("passw"))));
+                .andExpect(model().attribute("registerData", hasProperty("login", is(LOGIN))))
+                .andExpect(model().attribute("registerData", hasProperty("email", is(EMAIL))))
+                .andExpect(model().attribute("registerData", hasProperty("password", is(PASSWORD))))
+                .andExpect(model().attribute("registerData", hasProperty("surname", is(SURNAME))))
+                .andExpect(model().attribute("registerData", hasProperty("firstName", is(FIRST_NAME))))
+                .andExpect(model().attribute("registerData", hasProperty("secondName", is(SECOND_NAME))));
 
         verify(userFacade, times(1)).register(registerData); // registration will be performed.
     }
@@ -157,22 +171,22 @@ public class RegisterControllerTest {
      */
     @Test
     public void processRegisterProperDataDuplicatedUser() throws Exception {
-        registerData.setLogin("dummy");
-        registerData.setEmail("email@test.com");
-        registerData.setPassword("passw");
 
-        doThrow(new DuplicateUserException("Error")).when(userFacade).register(registerData);
+        doThrow(new DuplicateUserException("Exception")).when(userFacade).register(registerData);
 
         mockMvc.perform(post("/register")
                 .contentType(MediaType.APPLICATION_FORM_URLENCODED)
                 .flashAttr("registerData", registerData))
                 .andExpect(status().isOk())
                 .andExpect(view().name("register"))
-                .andExpect(model().attribute("registerData", hasProperty("login", is("dummy"))))
-                .andExpect(model().attribute("registerData", hasProperty("email", is("email@test.com"))))
-                .andExpect(model().attribute("registerData", hasProperty("password", is("passw"))));
+                .andExpect(model().attribute("registerData", hasProperty("login", is(LOGIN))))
+                .andExpect(model().attribute("registerData", hasProperty("email", is(EMAIL))))
+                .andExpect(model().attribute("registerData", hasProperty("password", is(PASSWORD))))
+                .andExpect(model().attribute("registerData", hasProperty("surname", is(SURNAME))))
+                .andExpect(model().attribute("registerData", hasProperty("firstName", is(FIRST_NAME))))
+                .andExpect(model().attribute("registerData", hasProperty("secondName", is(SECOND_NAME))));
 
-        verify(userFacade, times(1)).register(registerData); // registration will be performed once.
+        verify(userFacade, times(1)).register(registerData); // registration will be performed once but failed.
     }
 
     @SpringBootApplication
