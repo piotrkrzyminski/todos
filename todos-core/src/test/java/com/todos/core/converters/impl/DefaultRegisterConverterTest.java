@@ -36,10 +36,6 @@ public class DefaultRegisterConverterTest {
         registerData.setLogin(LOGIN);
         registerData.setPassword(PASSWORD);
         registerData.setEmail(EMAIL);
-        registerData.setFirstName(FIRST_NAME);
-        registerData.setSecondName(SECOND_NAME);
-        registerData.setSurname(SURNAME);
-        registerData.setContactNumber(PHONE);
     }
 
     /**
@@ -52,10 +48,6 @@ public class DefaultRegisterConverterTest {
         assertEquals(LOGIN, user.getLogin());
         assertEquals(EMAIL, user.getEmail());
         assertNotNull(user.getPassword());
-        assertEquals(FIRST_NAME, user.getFirstName());
-        assertEquals(SECOND_NAME, user.getSecondName());
-        assertEquals(SURNAME, user.getSurname());
-        assertEquals(PHONE, user.getContactNumber());
         assertTrue(user.isEnabled());
         assertFalse(user.isActive());
         assertNotNull(user.getCreationDate());

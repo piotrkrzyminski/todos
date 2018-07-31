@@ -34,35 +34,15 @@ public class DefaultRegisterConverter implements Converter<User, RegisterData> {
     public User convert(RegisterData data) {
         User model = new User();
 
-        if(data.getFirstName() != null) {
-            model.setFirstName(data.getFirstName());
-        }
-
-        if(data.getSecondName() != null) {
-            model.setSecondName(data.getSecondName());
-        }
-
-        if(data.getSurname() != null) {
-            model.setSurname(data.getSurname());
-        }
-
-        if(data.getLogin() != null) {
+        if (data.getLogin() != null) {
             model.setLogin(data.getLogin());
         }
 
-        if(data.getFirstName() != null) {
-            model.setFirstName(data.getFirstName());
-        }
-
-        if(data.getEmail() != null) {
+        if (data.getEmail() != null) {
             model.setEmail(data.getEmail());
         }
 
-        if(data.getContactNumber() != null) {
-            model.setContactNumber(data.getContactNumber());
-        }
-
-        if(data.getPassword() != null) {
+        if (data.getPassword() != null) {
             model.setPassword(encoder.encode(data.getPassword())); // perform password encoding for safety
         }
 

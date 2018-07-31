@@ -3,7 +3,6 @@ package com.todos.application.facades.impl;
 import com.todos.api.services.UserService;
 import com.todos.application.facades.impl.exceptions.DuplicateEmailException;
 import com.todos.application.facades.impl.exceptions.DuplicateLoginException;
-import com.todos.application.facades.impl.exceptions.DuplicateUserException;
 import com.todos.core.converters.Converter;
 import com.todos.core.converters.impl.DefaultRegisterConverter;
 import com.todos.core.services.DefaultUserService;
@@ -59,8 +58,6 @@ public class DefaultUserFacadeTest {
         when(registerData.getLogin()).thenReturn(LOGIN);
         when(registerData.getEmail()).thenReturn(EMAIL);
         when(registerData.getPassword()).thenReturn(PASSWORD);
-        when(registerData.getFirstName()).thenReturn(FIRST_NAME);
-        when(registerData.getSurname()).thenReturn(SURNAME);
     }
 
     /**

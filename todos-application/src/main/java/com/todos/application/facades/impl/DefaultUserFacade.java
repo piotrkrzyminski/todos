@@ -3,9 +3,9 @@ package com.todos.application.facades.impl;
 import com.todos.api.services.UserService;
 import com.todos.application.facades.UserFacade;
 import com.todos.application.facades.impl.exceptions.DuplicateEmailException;
-import com.todos.core.converters.Converter;
 import com.todos.application.facades.impl.exceptions.DuplicateLoginException;
 import com.todos.application.facades.impl.exceptions.DuplicateUserException;
+import com.todos.core.converters.Converter;
 import com.todos.data.RegisterData;
 import com.todos.model.User;
 import org.slf4j.Logger;
@@ -30,7 +30,7 @@ public class DefaultUserFacade implements UserFacade {
         LOG.info("Performing registration. Login [" + data.getLogin() + "], email [" + data.getEmail() + "]");
 
         //Check if user with login already exists and register him
-        if(!isUserExists(data)) {
+        if (!isUserExists(data)) {
             User user = registerConverter.convert(data);
 
             userService.save(user);
@@ -43,10 +43,10 @@ public class DefaultUserFacade implements UserFacade {
 
         validateRegisterData(data); // validate registration data
 
-        if(userService.getUserByLogin(data.getLogin()) != null)
+        if (userService.getUserByLogin(data.getLogin()) != null)
             throw new DuplicateLoginException("User with login " + data.getLogin() + " already exists");
 
-        if(userService.getUserByEmail(data.getEmail()) != null)
+        if (userService.getUserByEmail(data.getEmail()) != null)
             throw new DuplicateEmailException("User with email " + data.getEmail() + " already exists");
 
         return false;
@@ -56,8 +56,6 @@ public class DefaultUserFacade implements UserFacade {
         Assert.hasText(data.getLogin(), "Field [login] cannot be empty");
         Assert.hasText(data.getPassword(), "Field [password] cannot be empty");
         Assert.hasText(data.getEmail(), "Field [email] cannot be empty");
-        Assert.hasText(data.getFirstName(),"Field [first name] cannot be empty");
-        Assert.hasText(data.getSurname(),"Field [surname] cannot be empty");
     }
 
     @Autowired

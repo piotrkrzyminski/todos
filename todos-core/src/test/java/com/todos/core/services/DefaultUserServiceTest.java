@@ -12,10 +12,10 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
 import static org.mockito.ArgumentMatchers.anyString;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -99,9 +99,7 @@ public class DefaultUserServiceTest {
 
         userService.save(user);
 
-        when(userRepository.findUserByEmail("email@test.com")).thenReturn(user);
-
-        assertNotNull(userService.getUserByEmail("email@test.com"));
+        verify(userRepository).save(user);
     }
 
 

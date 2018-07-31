@@ -9,7 +9,7 @@ import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 /**
  * Test for user model and user data object converter.
@@ -39,18 +39,10 @@ public class DefaultUserConverterTest {
 
         userData.setLogin(LOGIN);
         userData.setEmail(EMAIL);
-        userData.setFirstName(FIRST_NAME);
-        userData.setSecondName(SECOND_NAME);
-        userData.setSurname(SURNAME);
-        userData.setContactNumber(PHONE);
 
         user.setLogin(LOGIN);
         user.setEmail(EMAIL);
-        user.setFirstName(FIRST_NAME);
-        user.setSecondName(SECOND_NAME);
-        user.setSurname(SURNAME);
         user.setPassword(PASSWORD);
-        user.setContactNumber(PHONE);
         user.setActive(true);
         user.setEnabled(true);
     }
@@ -64,10 +56,6 @@ public class DefaultUserConverterTest {
 
         assertEquals(LOGIN, convertedData.getLogin());
         assertEquals(EMAIL, convertedData.getEmail());
-        assertEquals(FIRST_NAME, convertedData.getFirstName());
-        assertEquals(SECOND_NAME, convertedData.getSecondName());
-        assertEquals(SURNAME, convertedData.getSurname());
-        assertEquals(PHONE, convertedData.getContactNumber());
     }
 
     @Test
@@ -76,9 +64,5 @@ public class DefaultUserConverterTest {
 
         assertEquals(LOGIN, userModel.getLogin());
         assertEquals(EMAIL, userModel.getEmail());
-        assertEquals(FIRST_NAME, userModel.getFirstName());
-        assertEquals(SECOND_NAME, userModel.getSecondName());
-        assertEquals(SURNAME, userModel.getSurname());
-        assertEquals(PHONE, userModel.getContactNumber());
     }
 }

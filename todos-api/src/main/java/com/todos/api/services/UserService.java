@@ -2,6 +2,9 @@ package com.todos.api.services;
 
 import com.todos.model.User;
 
+/**
+ * Service for users.
+ */
 public interface UserService {
 
     /**

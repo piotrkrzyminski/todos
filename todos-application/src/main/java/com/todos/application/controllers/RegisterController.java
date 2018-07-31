@@ -31,6 +31,9 @@ public class RegisterController {
         return "register";
     }
 
+    /**
+     * Process register form data and create account if data is proper.
+     */
     @RequestMapping(method = RequestMethod.POST)
     public String handleRegister(@ModelAttribute("registerData") @Validated RegisterData registerData,
                                  BindingResult result, Model model) {

@@ -17,7 +17,8 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 
-import static org.hamcrest.Matchers.*;
+import static org.hamcrest.Matchers.hasProperty;
+import static org.hamcrest.Matchers.is;
 import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -61,9 +62,6 @@ public class RegisterControllerTest {
         registerData.setLogin(LOGIN);
         registerData.setEmail(EMAIL);
         registerData.setPassword(PASSWORD);
-        registerData.setFirstName(FIRST_NAME);
-        registerData.setSecondName(SECOND_NAME);
-        registerData.setSurname(SURNAME);
     }
 
     /**
