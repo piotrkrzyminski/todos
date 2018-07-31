@@ -58,8 +58,6 @@ public class DefaultUserFacadeTest {
         when(registerData.getLogin()).thenReturn(LOGIN);
         when(registerData.getEmail()).thenReturn(EMAIL);
         when(registerData.getPassword()).thenReturn(PASSWORD);
-        when(registerData.getFirstName()).thenReturn(FIRST_NAME);
-        when(registerData.getSurname()).thenReturn(SURNAME);
     }
 
     /**

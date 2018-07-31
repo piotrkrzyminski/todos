@@ -29,22 +29,6 @@ public class DefaultUserConverter implements Converter<User, UserData> {
             userData.setEmail(model.getEmail());
         }
 
-        if (model.getContactNumber() != null) {
-            userData.setContactNumber(model.getContactNumber());
-        }
-
-        if (model.getFirstName() != null) {
-            userData.setFirstName(model.getFirstName());
-        }
-
-        if (model.getSecondName() != null) {
-            userData.setSecondName(model.getSecondName());
-        }
-
-        if (model.getSecondName() != null) {
-            userData.setSurname(model.getSurname());
-        }
-
         return userData;
     }
 
@@ -58,22 +42,6 @@ public class DefaultUserConverter implements Converter<User, UserData> {
 
         if (data.getEmail() != null) {
             user.setEmail(data.getEmail());
-        }
-
-        if (data.getContactNumber() != null) {
-            user.setContactNumber(data.getContactNumber());
-        }
-
-        if (data.getFirstName() != null) {
-            user.setFirstName(data.getFirstName());
-        }
-
-        if (data.getSecondName() != null) {
-            user.setSecondName(data.getSecondName());
-        }
-
-        if (data.getSurname() != null) {
-            user.setSurname(data.getSurname());
         }
 
         return user;

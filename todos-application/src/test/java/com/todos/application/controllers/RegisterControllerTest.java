@@ -62,9 +62,6 @@ public class RegisterControllerTest {
         registerData.setLogin(LOGIN);
         registerData.setEmail(EMAIL);
         registerData.setPassword(PASSWORD);
-        registerData.setFirstName(FIRST_NAME);
-        registerData.setSecondName(SECOND_NAME);
-        registerData.setSurname(SURNAME);
     }
 
     /**

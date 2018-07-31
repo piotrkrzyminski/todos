@@ -15,6 +15,13 @@
     <p>Second name: <input type="password" th:field="*{secondName}"/></p>
     <p>Surname:* <input type="password" th:field="*{surname}"/></p>
     <p>Phone: <input type="password" th:field="*{contactNumber}"/></p>
+    <h1>Gdzie mieszkasz</h1>
+    <p>Państwo: <select th:field="*{country}">
+       <option th:each="c : ${countries}"
+           th:value="${c.getName()}"
+               th:utext="${c.getName()}"/>
+       </option>
+    </select></p>
     <p><input type="submit" value="Zarejestruj się"> <input type="reset" value="Wyczyść"></p>
 </form>
 <span th:if="${error != null}" th:text="#{register.error}"></span>

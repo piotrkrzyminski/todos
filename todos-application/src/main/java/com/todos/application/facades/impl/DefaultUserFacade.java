@@ -56,8 +56,6 @@ public class DefaultUserFacade implements UserFacade {
         Assert.hasText(data.getLogin(), "Field [login] cannot be empty");
         Assert.hasText(data.getPassword(), "Field [password] cannot be empty");
         Assert.hasText(data.getEmail(), "Field [email] cannot be empty");
-        Assert.hasText(data.getFirstName(), "Field [first name] cannot be empty");
-        Assert.hasText(data.getSurname(), "Field [surname] cannot be empty");
     }
 
     @Autowired
