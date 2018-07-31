@@ -9,7 +9,7 @@ import com.todos.model.AbstractModel;
  * @param <E> model item.
  * @param <T> dto item.
  */
-public interface Converter<E extends AbstractModel,T extends AbstractData> {
+public interface Converter<E extends AbstractModel, T extends AbstractData> {
 
     /**
      * Convert model object to data.
