@@ -1,7 +1,9 @@
 package com.todos.application.facades;
 
 import com.todos.application.facades.impl.exceptions.DuplicateUserException;
+import com.todos.data.LoginData;
 import com.todos.data.RegisterData;
+import com.todos.model.User;
 
 /**
  * Facade used for operation for user.

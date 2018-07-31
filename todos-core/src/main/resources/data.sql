@@ -1,0 +1,1 @@
+insert into user (id, username, email, password, active, enabled) values (1, 'adam', 'adam@test.pl', '$2a$04$n9If9Q.JjvENPjA9dEnv3uiPwZCN3WpezSE8SBuB9PGBbqAlQ4EfK', false, true);

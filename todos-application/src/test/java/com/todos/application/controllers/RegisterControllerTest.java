@@ -59,7 +59,7 @@ public class RegisterControllerTest {
         mockMvc = MockMvcBuilders.standaloneSetup(controller)
                 .setViewResolvers(viewResolver).build();
 
-        registerData.setLogin(LOGIN);
+        registerData.setUsername(LOGIN);
         registerData.setEmail(EMAIL);
         registerData.setPassword(PASSWORD);
     }
@@ -80,7 +80,7 @@ public class RegisterControllerTest {
      */
     @Test
     public void processRegisterFormWrongLoginPassed() throws Exception {
-        registerData.setLogin("");
+        registerData.setUsername("");
 
         mockMvc.perform(post("/register")
                 .contentType(MediaType.APPLICATION_FORM_URLENCODED)

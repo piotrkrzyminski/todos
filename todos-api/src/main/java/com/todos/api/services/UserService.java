@@ -1,11 +1,12 @@
 package com.todos.api.services;
 
 import com.todos.model.User;
+import org.springframework.security.core.userdetails.UserDetailsService;
 
 /**
  * Service for users.
  */
-public interface UserService {
+public interface UserService extends UserDetailsService {
 
     /**
      * Saves user to database. Used for registration process.

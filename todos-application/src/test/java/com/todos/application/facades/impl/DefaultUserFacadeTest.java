@@ -55,7 +55,7 @@ public class DefaultUserFacadeTest {
         userFacade.setRegisterConverter(registerConverter);
 
         registerData = mock(RegisterData.class);
-        when(registerData.getLogin()).thenReturn(LOGIN);
+        when(registerData.getUsername()).thenReturn(LOGIN);
         when(registerData.getEmail()).thenReturn(EMAIL);
         when(registerData.getPassword()).thenReturn(PASSWORD);
     }
@@ -81,7 +81,7 @@ public class DefaultUserFacadeTest {
      */
     @Test(expected = IllegalArgumentException.class)
     public void testRegistrationLoginIsNull() throws Exception {
-        when(registerData.getLogin()).thenReturn(null);
+        when(registerData.getUsername()).thenReturn(null);
 
         userFacade.register(registerData);
 
@@ -94,7 +94,7 @@ public class DefaultUserFacadeTest {
      */
     @Test(expected = IllegalArgumentException.class)
     public void testRegistrationEmptyLogin() throws Exception {
-        when(registerData.getLogin()).thenReturn("");
+        when(registerData.getUsername()).thenReturn("");
 
         userFacade.register(registerData);
 

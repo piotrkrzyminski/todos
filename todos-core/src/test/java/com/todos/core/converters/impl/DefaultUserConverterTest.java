@@ -40,7 +40,7 @@ public class DefaultUserConverterTest {
         userData.setLogin(LOGIN);
         userData.setEmail(EMAIL);
 
-        user.setLogin(LOGIN);
+        user.setUsername(LOGIN);
         user.setEmail(EMAIL);
         user.setPassword(PASSWORD);
         user.setActive(true);
@@ -62,7 +62,7 @@ public class DefaultUserConverterTest {
     public void testConvertFromDataToModel() {
         User userModel = userConverter.convert(userData);
 
-        assertEquals(LOGIN, userModel.getLogin());
+        assertEquals(LOGIN, userModel.getUsername());
         assertEquals(EMAIL, userModel.getEmail());
     }
 }

@@ -45,7 +45,7 @@ public class DefaultUserServiceTest {
      */
     @Test
     public void testFindUserByLoginFound() {
-        when(userRepository.findUserByLogin(anyString())).thenReturn(user); // found user in database
+        when(userRepository.findUserByUsername(anyString())).thenReturn(user); // found user in database
 
         User result = userService.getUserByLogin("dummy");
 
@@ -57,7 +57,7 @@ public class DefaultUserServiceTest {
      */
     @Test
     public void testFindUserByLoginNotFound() {
-        when(userRepository.findUserByLogin(anyString())).thenReturn(null); // user not found in database
+        when(userRepository.findUserByUsername(anyString())).thenReturn(null); // user not found in database
 
         User result = userService.getUserByLogin("dummy");
 
@@ -81,7 +81,7 @@ public class DefaultUserServiceTest {
      */
     @Test
     public void testFindUserByEmailNotFound() {
-        when(userRepository.findUserByLogin(anyString())).thenReturn(null); // user not found in database
+        when(userRepository.findUserByUsername(anyString())).thenReturn(null); // user not found in database
 
         User result = userService.getUserByEmail("dummy@email.com");
 
@@ -93,7 +93,7 @@ public class DefaultUserServiceTest {
      */
     @Test
     public void testSave() {
-        user.setLogin("dummy");
+        user.setUsername("dummy");
         user.setEmail("email@test.com");
         user.setPassword("qwerty");
 

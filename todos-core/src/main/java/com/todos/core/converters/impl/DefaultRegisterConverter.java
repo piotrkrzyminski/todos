@@ -3,7 +3,9 @@ package com.todos.core.converters.impl;
 import com.todos.core.converters.Converter;
 import com.todos.data.RegisterData;
 import com.todos.model.User;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import java.util.Date;
@@ -16,11 +18,7 @@ import java.util.Date;
 @Component
 public class DefaultRegisterConverter implements Converter<User, RegisterData> {
 
-    private BCryptPasswordEncoder encoder;
-
-    public DefaultRegisterConverter() {
-        encoder = new BCryptPasswordEncoder();
-    }
+    private PasswordEncoder passwordEncoder;
 
     /**
      * Avoid converting from user to register data
@@ -34,8 +32,8 @@ public class DefaultRegisterConverter implements Converter<User, RegisterData> {
     public User convert(RegisterData data) {
         User model = new User();
 
-        if (data.getLogin() != null) {
-            model.setLogin(data.getLogin());
+        if (data.getUsername() != null) {
+            model.setUsername(data.getUsername());
         }
 
         if (data.getEmail() != null) {
@@ -43,7 +41,7 @@ public class DefaultRegisterConverter implements Converter<User, RegisterData> {
         }
 
         if (data.getPassword() != null) {
-            model.setPassword(encoder.encode(data.getPassword())); // perform password encoding for safety
+            model.setPassword(passwordEncoder.encode(data.getPassword())); // perform password encoding for safety
         }
 
         model.setEnabled(true); // set account enabled before first login
@@ -51,5 +49,10 @@ public class DefaultRegisterConverter implements Converter<User, RegisterData> {
         model.setCreationDate(new Date()); // set creation date to current time
 
         return model;
+    }
+
+    @Autowired
+    public void setPasswordEncoder(PasswordEncoder passwordEncoder) {
+        this.passwordEncoder = passwordEncoder;
     }
 }

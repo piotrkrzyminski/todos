@@ -33,7 +33,7 @@ public class DefaultRegisterConverterTest {
         registerConverter = new DefaultRegisterConverter();
         registerData = new RegisterData();
 
-        registerData.setLogin(LOGIN);
+        registerData.setUsername(LOGIN);
         registerData.setPassword(PASSWORD);
         registerData.setEmail(EMAIL);
     }
@@ -45,7 +45,7 @@ public class DefaultRegisterConverterTest {
     public void testConverterFromRegisterDataToUser() {
         User user = registerConverter.convert(registerData);
 
-        assertEquals(LOGIN, user.getLogin());
+        assertEquals(LOGIN, user.getUsername());
         assertEquals(EMAIL, user.getEmail());
         assertNotNull(user.getPassword());
         assertTrue(user.isEnabled());

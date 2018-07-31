@@ -21,8 +21,8 @@ public class DefaultUserConverter implements Converter<User, UserData> {
             userData.setId(model.getId());
         }
 
-        if (model.getLogin() != null) {
-            userData.setLogin(model.getLogin());
+        if (model.getUsername() != null) {
+            userData.setLogin(model.getUsername());
         }
 
         if (model.getEmail() != null) {
@@ -37,7 +37,7 @@ public class DefaultUserConverter implements Converter<User, UserData> {
         User user = new User();
 
         if (data.getLogin() != null) {
-            user.setLogin(data.getLogin());
+            user.setUsername(data.getLogin());
         }
 
         if (data.getEmail() != null) {
