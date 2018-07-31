@@ -2,7 +2,6 @@ package com.todos.data;
 
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
-import java.util.List;
 
 public class UserData extends AbstractData {
 

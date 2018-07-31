@@ -17,10 +17,10 @@
     <p>Phone: <input type="password" th:field="*{contactNumber}"/></p>
     <h1>Gdzie mieszkasz</h1>
     <p>Państwo: <select th:field="*{country}">
-       <option th:each="c : ${countries}"
-           th:value="${c.getName()}"
-               th:utext="${c.getName()}"/>
-       </option>
+        <option th:each="c : ${countries}"
+                th:value="${c.getName()}"
+                th:utext="${c.getName()}"/>
+        </option>
     </select></p>
     <p><input type="submit" value="Zarejestruj się"> <input type="reset" value="Wyczyść"></p>
 </form>
