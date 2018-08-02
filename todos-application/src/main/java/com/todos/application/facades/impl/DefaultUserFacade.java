@@ -60,8 +60,6 @@ public class DefaultUserFacade implements UserFacade {
         Assert.hasText(data.getEmail(), "Field [email] cannot be empty");
     }
 
-
-
     @Autowired
     public void setUserService(UserService userService) {
         this.userService = userService;

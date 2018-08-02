@@ -6,6 +6,8 @@
 <body>
 <h1>Zaloguj się</h1>
 
+<span th:if="${param.logout} != null">Uzytkownik został wylogowany</span>
+<span th:if="${param.error} != null">Dane są niepoprawne</span>
 <form th:object="${loginData}" method="post">
     <p>Login:* <input type="text" th:field="*{username}"/></p>
     <p>Password:* <input type="password" th:field="*{password}"/></p>
