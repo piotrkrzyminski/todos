@@ -1,11 +1,11 @@
 <!DOCTYPE html>
-<html lang="pl">
-<title>TODOS</title>
-<meta charset="UTF-8">
-</head>
-<body>
-<h1>Home</h1>
-<a href="register">Rejestracja</a>
-<a href="login">Logowanie</a>
-</body>
+<html xmlns:th="http://www.thymeleaf.org" lang="pl">
+    <head th:replace="fragments/header :: header">
+
+    </head>
+    <body>
+        <div class="container-fluid">
+            <div th:replace="fragments/header :: nav"></div>
+        </div>
+    </body>
 </html>

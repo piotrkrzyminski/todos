@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="pl"
+        xmlns:th="http://www.thymeleaf.org"
+        xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+    <head th:fragment="header">
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" type="text/css" href="../../static/css/main.css" th:href="@{/css/main.css}">
+        <link rel="stylesheet" type="text/css" href="../../static/css/header.css" th:href="@{/css/header.css}">
+        <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    </head>
+    <body>
+        <div class="container-fluid">
+            <div class="row nav-bar" th:fragment="nav">
+                <div class="col-lg-6 center">
+                    <div class="row">
+                        <div class="col-sm-3 col-lg-2 nav-logo-container">
+                            <img class="nav-logo" src="../../static/images/todo-icon.png" alt="todos-logo" th:src="@{/images/todo-icon.png}">
+                        </div>
+                        <div class="nav-icon-container float-right mobile">
+                              <span></span>
+                              <span></span>
+                              <span></span>
+                        </div>
+                        <div class="col nav-links-container float-right desktop">
+                            <div sec:authorize="isAnonymous()">
+                                <div class="nav-link">
+                                    <a href="login"> Zaloguj się</a>
+                                </div>
+                                <div class="nav-link">
+                                    <a href="register">Zarejestruj się</a>
+                                </div>
+                                <div class="nav-link">
+                                    <a href="#">Jak to działa?</a>
+                                </div>
+                            </div>
+                            <div sec:authorize="isAuthenticated()">
+                                <div class="nav-link">
+                                    <a href="logout"> Wyloguj się</a>
+                                </div>
+                                <div class="nav-link">
+                                    <span sec:authentication="name">Witaj User</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

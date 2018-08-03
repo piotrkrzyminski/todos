@@ -1,0 +1,40 @@
+body { 
+    margin: 0;
+}
+
+a {
+    text-decoration: none !important;
+    transition: .5s;
+    color: #5D686B !important;
+}
+
+a:hover {
+    color: #DE2821 !important;
+}
+
+.center {
+    margin: 0 auto;
+    padding: 0 !important;
+}
+
+.desktop {
+    display: none;
+}
+
+.mobile {
+    display: block;
+}
+
+.mobile {
+    display: block;
+}
+
+@media only screen and (min-width: 768px) {
+    .desktop {
+        display: block;
+    }
+    
+    .mobile {
+        display: none;
+    }
+}
