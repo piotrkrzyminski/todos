@@ -1,17 +1,31 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="pl">
-    <head th:replace="fragments/header :: header">
-
+    <head>
+        <div th:replace="fragments/header :: header"></div>
+        <link rel="stylesheet" type="text/css" href="../../static/css/register.css" th:href="@{/css/register.css}">
     </head>
     <body>
-        <h1>Zarejestruj się</h1>
-
-        <form action="#" th:action="@{/register}" th:object="${registerData}" method="post">
-            <p>Login:* <input type="text" th:field="*{username}"/></p>
-            <p>Email:* <input type="text" th:field="*{email}"/></p>
-            <p>Password:* <input type="password" th:field="*{password}"/></p>
-            <p><input type="submit" value="Zarejestruj się"> <input type="reset" value="Wyczyść"></p>
-        </form>
-        <span th:if="${error != null}" th:text="#{register.error}"></span>
+        <div class="container-fluid background">
+            <div class="register-container">
+                <h1 class="register-header">
+                    Załóż darmowe konto
+                </h1>
+                <div class="register-form">
+                    <form action="#" th:action="@{/register}" th:object="${registerData}" method="post">
+                        <span class="text-field-label">Login</span>
+                        <input type="text" class="text-input" th:field="*{username}">
+                        <span class="text-field-label">Email</span>
+                        <input type="text" class="text-input" th:field="*{email}">
+                        <span class="text-field-label">Hasło</span>
+                        <input type="password" class="text-input" th:field="*{password}">
+                        <input type="submit" value="Rejestracja" class="register-button">
+                    </form>
+                    <div class="alert alert-danger" th:if="${error != null}" th:text="#{register.error}">
+                        <strong>Danger!</strong> Indicates a dangerous or potentially negative action.
+                    </div>
+                </div>
+            </div>
+        </div>
     </body>
+    </html>
 </html>
